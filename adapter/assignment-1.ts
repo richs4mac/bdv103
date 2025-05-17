@@ -1,4 +1,4 @@
-import books from './../mcmasteful-book-list.json';
+import books from './../mcmasterful-book-list.json';
 
 export interface Book {
     name: string,
@@ -9,7 +9,7 @@ export interface Book {
 };
 
 // If you have multiple filters, a book matching any of them is a match.
-async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promise<Book[]>{
+async function listBooks(filters?: Array<{ from?: number, to?: number; }>): Promise<Book[]> {
     // if (!filters || filters.length === 0) {
     //     return books; // No filters, return all books
     // }
@@ -20,7 +20,7 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
     //         (filter.to === undefined || book.price <= filter.to)
     //     )
     // );
-    throw new Error("Todo")
+    throw new Error("Todo");
 }
 
 const assignment = "assignment-1";
