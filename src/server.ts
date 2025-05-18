@@ -1,11 +1,13 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import qs from 'koa-qs';
+import cors from '@koa/cors';
 import routes from './routes';
 
 const app = new Koa();
 qs(app);
 
+app.use(cors());
 app.use(bodyParser());
 app.use(routes.allowedMethods());
 app.use(routes.routes());

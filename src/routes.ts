@@ -1,18 +1,7 @@
 import Router from 'koa-router';
 import adapter from '../adapter';
-const router = new Router();
 
-router.get('/books', async (ctx) => {
-    const filters = ctx.query.filters as Array<{ from?: number, to?: number }>;
-    // TODO: validate filters
-    try {
-        const books = await adapter.listBooks(filters);
-        ctx.body = books;
-    } catch (error) {
-        ctx.status = 500;
-        ctx.body = { error: `Failed to fetch books due to: ${error}` };
-    }
-});
+const router = new Router();
 
 function validateFilters(filters: any): boolean {
     // Check if filters exist and are an array
@@ -35,5 +24,24 @@ function validateFilters(filters: any): boolean {
     });
 }
 
+
+router.get('/books', async (ctx) => {
+    const filters = ctx.query.filters as Array<{ from?: number, to?: number; }>;
+
+    // validate filters
+    const validated = validateFilters(filters);
+    if (!validated) {
+        ctx.status = 400;
+        ctx.body = { error: `Invalid request` };
+    }
+
+    try {
+        const books = await adapter.listBooks(filters);
+        ctx.body = books;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: `Failed to fetch books due to: ${error}` };
+    }
+});
 
 export default router;
